@@ -1,0 +1,1261 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>ListaEM</title>
+	
+	<style>
+	/*Responsive table*/
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  background: #34495e; 
+  color: #f3f3f3;
+}
+
+td, th { 
+  padding: 8px; 
+  text-align: left; 
+}
+
+td {
+	height: 36px;
+}
+
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+  background: #16a085; 
+}
+
+th { 
+  background: #2c3e50; 
+  font-weight: bold; 
+}
+
+h1 a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.sorting_asc {
+    background-image: url(https://cdn.datatables.net/1.10.19/images/sort_asc.png);
+	cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+.sorting_desc {
+    background-image: url(https://cdn.datatables.net/1.10.19/images/sort_desc.png);
+	cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+.sorting {
+    background-image: url(https://cdn.datatables.net/1.10.19/images/sort_both.png);
+	cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+a {
+	border:0px none;
+	outline:0px none;
+	text-decoration:none;
+}
+.clear{
+	clear:both;
+	font-size:0px;
+	padding:0px;
+	margin:0px;
+	line-height:0px;
+	float:none;
+}
+
+
+.pagination{
+	
+	margin-top: 10px;
+	margin-left: 50%;
+    margin-right: auto;
+}
+.pagination span{
+	background:#eaeaea;
+	padding:5px 8px 2px;
+	padding-right:7px;
+	height:17px;
+	border:1px solid #d1d1d2;
+	box-shadow:0px 1px 1px #dee0e2;
+	text-shadow:0px 1px 0px #fff;
+	border-radius:3px;
+	cursor:pointer;
+	display:inline-block;
+	margin:0px 3px;
+	color:#717171;
+	font-weight:bold;
+	float:left;
+}
+.pagination span:first-child{
+	margin-left:0px;
+}
+.pagination span:last-child{
+	margin-right:0px;
+}
+
+.pagination span.biggerTxt{
+	padding:0px 8px 7px;
+	font-size:18px;
+}
+.pagination span:hover{
+	border:1px solid #5e5e5e;
+	background:#686868;
+	color:#f2f2f2;
+	text-shadow:0px 0px 0px none;
+}
+.pagination span.activePage{
+	border:1px solid #5e5e5e;
+	background:#686868;
+	color:#f2f2f2;
+	text-shadow:0px 0px 0px none;
+}
+
+
+.num {
+  display: none;
+}
+.paginator {
+  line-height: 150%;
+}
+.paginator > span {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.paginator_active {
+  color: red;
+}
+
+/*Button*/
+.button2 {
+  height: 30px;
+  width: 70px;
+  box-shadow: 0px 2px 4px #2c3e50;
+  text-align: center;
+  padding: 5px;
+  font-size: 1.2rem;
+  line-height: 32px;
+  border-radius: 3px;
+  margin: 15px;
+  transition: box-shadow ease 400ms;
+  transition: transform ease 400ms;
+  color: #ecf0f1;
+  text-decoration: none;
+  }
+.button2:hover {
+  box-shadow: 0px 4px 8px #2c3e50;
+  transform : scale(1.05, 1.05);
+  }
+
+.button3 {
+  height: 30px;
+  width: 88px;
+  box-shadow: 0px 2px 4px #2c3e50;
+  text-align: center;
+  padding: 5px;
+  font-size: 1.2rem;
+  line-height: 32px;
+  border-radius: 3px;
+  margin: 15px;
+  transition: box-shadow ease 400ms;
+  transition: transform ease 400ms;
+  color: #ecf0f1;
+  text-decoration: none;
+  }
+.button3:hover {
+  box-shadow: 0px 4px 8px #2c3e50;
+  transform : scale(1.05, 1.05);
+  }
+  
+.button4 {
+  height: 30px;
+  width: 88px;
+  box-shadow: 0px 2px 4px #2c3e50;
+  text-align: center;
+  padding: 5px;
+  font-size: 1.2rem;
+  line-height: 32px;
+  border-radius: 3px;
+  margin: 15px;
+  transition: box-shadow ease 400ms;
+  transition: transform ease 400ms;
+  color: #ecf0f1;
+  text-decoration: none;
+  }
+.button4:hover {
+  box-shadow: 0px 4px 8px #2c3e50;
+  transform : scale(1.05, 1.05);
+  }
+  
+.container2 {
+	display: flex;
+}  
+
+a:hover {
+  text-decoration: none;
+  color: #ecf0f1;
+}
+a:link {
+    color: #ecf0f1; /* Цвет ссылок */
+}
+a:visited {
+    color: #ecf0f1; /* Цвет посещенных ссылок */
+}
+.grey {
+  background: #2c3e50;
+}
+.pink {
+  background: #942341;
+}
+.green {
+  background: #239432;
+}
+
+/*---Modal*/
+#modal, #modal2, #modal3 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background: rgba(0,0,0,0.7);
+    opacity: 0;
+    -webkit-transition: opacity 1s ease, z-index 1s ease;
+    -moz-transition: opacity 1s ease, z-index 1s ease;
+    -ms-transition: opacity 1s ease, z-index 1s ease;
+    -o-transition: opacity 1s ease, z-index 1s ease;
+    transition: opacity 1s ease, z-index 1s ease;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+}
+.modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  margin: 10% 25%;
+  width: 480px;
+  height: 200px;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+
+  -webkit-transition: opacity 1s ease, z-index 1s ease;
+  -moz-transition: opacity 1s ease, z-index 1s ease;
+  -ms-transition: opacity 1s ease, z-index 1s ease;
+  -o-transition: opacity 1s ease, z-index 1s ease;
+  transition: opacity 1s ease, z-index 1s ease;
+}
+
+.modal a.close {
+    position: absolute;
+    display: block;
+    top: 7px;
+    right: 7px;
+    background: #232323;
+    color: #fff;
+    text-align: center;
+    font: 14px/1.5 Helvetica, Verdana, sans-serif;
+    text-decoration: none;
+    padding: 0 5px;
+}
+
+.modal h2 {
+  color: #232323;
+  text-transform: uppercase;
+  font: 35px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+.modal p {
+  color: #444;
+  text-align: left;
+  font: 15px/1.8 Georgia, Times, sans-serif;
+}
+
+#modal:target, #modal:target > .modal {
+  opacity: 1;
+  z-index: 2;
+}
+
+@media all and (max-width: 767px) {
+  .modal {
+    width: 480px;
+    height: 250px;
+  }
+
+  .modal h2 {
+    font: 30px/1.5 Helvetica, Verdana, sans-serif;
+    text-transform: uppercase;
+  }
+
+  .modal p {
+    font: 15px/1.8 Georgia, Times, sans-serif;
+  }
+}
+
+/*Moomndal*/
+.modal-content {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;    
+    background: #fff;
+    -webkit-box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.1);  
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    outline: 0;
+}
+
+.modal-header {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 5px 4px 3px 0;
+    border-bottom: 1px solid #e9ecef;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+}
+
+button.close {
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+	float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+	overflow: visible;
+	text-transform: none;
+	margin-left: auto;
+	cursor: pointer;
+}
+
+.modal-body {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 0 16px;
+}
+fieldset {
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+label {
+    display: inline-block;
+    margin-bottom: .5rem;
+}
+button, input {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+	margin-left: 10px;
+}
+.modal-footer {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 3px 16px 16px;
+    border-top: 1px solid #e9ecef;
+}
+#select {
+	padding: 5px;
+}
+	</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Simple list of Cars</h1>
+	<div class="container2 col-sm-4">
+	  
+		<div class="button2 grey"><a href="#modal" data-mod="btn">Add row</a></div>
+	    <div class="button3 pink"><a href="#modal2" data-mod="btn2">Delete row</a></div>
+	    <div class="button4 green" id="hfg"><a href="#modal3" data-mod="btn3">Edit row</a></div>
+	  
+	<div id="modal">
+				<div class="modal" data-mod="mdl">
+						<div class="modal-content" data-mod="mdl">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body" data-mod="mdl">
+									<form class="bd-example" data-mod="mdl">
+								<fieldset data-mod="mdl">
+									<p data-mod="mdl">
+									<label for="inputf" data-mod="mdl">Название модели</label>
+									<input type="text" id="inputf" placeholder="Название модели" data-mod="mdl">
+									</p>
+									
+									<p data-mod="mdl">
+									<label for="select" data-mod="mdl">Привод</label>
+									<select id="select" data-mod="mdl">
+										<option value="" data-mod="mdl">Выбрать...</option>
+										<option value="Полный" data-mod="mdl">Полный</option>
+										<option value="Передний" data-mod="mdl">Передний</option>
+										<option value="Задний" data-mod="mdl">Задний</option>
+									</select>
+									</p>
+
+									<p data-mod="mdl">
+										<label for="inputg" data-mod="mdl">Мощность л.с.</label>
+										<input type="number" id="inputg" data-mod="mdl">
+									</p>
+									<p data-mod="mdl">
+										<label for="inputh" data-mod="mdl">Максимальная скорость, км/ч</label>
+										<input type="number" id="inputh" data-mod="mdl">
+									</p>
+									<p data-mod="mdl">
+										<label for="inputj" data-mod="mdl">Время разгона до 100 км/ч, сек</label>
+										<input type="number" id="inputj" data-mod="mdl">
+									</p>
+									<p data-mod="mdl">
+										<label for="inputk" data-mod="mdl">Расход топлива <br>(город / трасса / смешанный)</label>
+										<input type="text" id="inputk" data-mod="mdl">
+									</p>
+									<div class="modal-footer" data-mod="mdl">
+											<input type="submit" class="btn btn-primary" data-dismiss="modal" data-mod="mdl" value="Save" id="Sumb"></input>
+											<button class="btn btn-primary">Cancel</button>
+									</div>
+								</fieldset>
+								</form>            
+							</div>
+							</div>
+						</div><!--close modal class -->
+				</div><!-- ckise modal div -->
+	</div>
+	
+	<div id="modal2">
+				<div class="modal" data-mod="mdl2">
+						<div class="modal-content" data-mod="mdl2">
+							<div class="modal-header" data-mod="mdl2">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body" data-mod="mdl2">
+									<form class="bd-example" data-mod="mdl2">
+								<fieldset data-mod="mdl2">
+									<p data-mod="mdl2">Are you sure you want to delete row?</p>
+									<div class="modal-footer" data-mod="mdl2">
+											<input type="submit" class="btn btn-primary" data-dismiss="modal" data-mod="mdl2" value="Yes" id="Sumb2"></input>
+											<button class="btn btn-primary" data-dismiss="modal" value="Cancel">Now</button>
+									</div>
+								</fieldset>
+								</form>            
+							</div>
+							</div>
+						</div><!--close modal class -->
+	</div><!-- ckise modal div -->
+	
+	<div id="modal3">
+				<div class="modal" data-mod="mdl3">
+						<div class="modal-content" data-mod="mdl3">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body" data-mod="mdl3">
+									<form class="bd-example" data-mod="mdl3">
+								<fieldset data-mod="mdl3">
+									<p data-mod="mdl3">
+									<label for="inputf3" data-mod="mdl3">Название модели</label>
+									<input type="text" id="inputf3" placeholder="Название модели" data-mod="mdl3">
+									</p>
+									
+									<p data-mod="mdl3">
+									<label for="select3" data-mod="mdl3">Привод</label>
+									<select id="select3" data-mod="mdl3">
+										<option value="" data-mod="mdl3">Выбрать...</option>
+										<option value="Полный" data-mod="mdl3">Полный</option>
+										<option value="Передний" data-mod="mdl3">Передний</option>
+										<option value="Задний" data-mod="mdl3">Задний</option>
+									</select>
+									</p>
+
+									<p data-mod="mdl3">
+										<label for="inputg3" data-mod="mdl3">Мощность л.с.</label>
+										<input type="number" id="inputg3" data-mod="mdl3">
+									</p>
+									<p data-mod="mdl3">
+										<label for="inputh3" data-mod="mdl3">Максимальная скорость, км/ч</label>
+										<input type="number" id="inputh3" data-mod="mdl3">
+									</p>
+									<p data-mod="mdl3">
+										<label for="inputj3" data-mod="mdl3">Время разгона до 100 км/ч, сек</label>
+										<input type="number" id="inputj3" data-mod="mdl3">
+									</p>
+									<p data-mod="mdl3">
+										<label for="inputk3" data-mod="mdl3">Расход топлива <br>(город / трасса / смешанный)</label>
+										<input type="text" id="inputk3" data-mod="mdl3">
+									</p>
+									<div class="modal-footer" data-mod="mdl3">
+											<input type="submit" class="btn btn-primary" data-dismiss="modal" data-mod="mdl" value="Save" id="Sumb3"></input>
+											<button class="btn btn-primary">Cancel</button>
+									</div>
+								</fieldset>
+								</form>            
+							</div>
+							</div>
+						</div><!--close modal class -->
+	</div><!-- ckise modal div -->
+	</div>
+	
+	</div>
+	
+    <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th width="10%" class="sorting_asc"></th>
+            <th class="sorting" data-type="string">Название модели</th>
+            <th class="sorting" data-type="string">Привод</th>
+            <th class="sorting" data-type="number">Мощность, л.с.</th>
+            <th class="sorting" data-type="number">Максимальная скорость, км/ч</th>
+            <th class="sorting" data-type="number">Время разгона до 100 км/ч, сек</th>
+			<th class="sorting" data-type="fuel">Расход топлива (город / трасса / смешанный)</th>
+        </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+    </table>
+	
+	
+    <div class="pagination"  onclick="pagination(event)">
+    	
+       	<a href="javascript:(0)" title="01" class="activePage">1</a>
+       	    
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script>
+var getJSON = function(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'json';
+    xhr.onload = function() {
+      var status = xhr.status;
+      if (status == 200) {
+        callback(null, xhr.response);
+      } else {
+        callback(status);
+      }
+    };
+    xhr.send();
+};
+
+// использование
+getJSON('https://api.myjson.com/bins/jywbg',
+function(err, data) {
+  if (err != null) {
+    alert('Something went wrong: ' + err);
+  } else {
+	console.log(data.Name.length);	
+	
+	var i;
+for (i = 0; i < data.Name.length; i++) { 
+  let g = i+1;
+  let element = document.getElementById('example1').getElementsByTagName("tbody")[0];  
+  let tr = document.createElement('tr');
+  if(i>9){
+  tr.className = "num";}
+  tr.dataset.num = i;
+  element.append(tr);
+  
+  let tf = document.createElement('td');
+  tf.innerHTML = '<input type="checkbox" />';
+  let td = document.createElement('td');
+  td.innerHTML = data.Name[i];
+  let td2 = document.createElement('td');
+  td2.innerHTML = data.DriveUnit[i];
+  let td3 = document.createElement('td');
+  td3.innerHTML = data.Power[i];
+  let td4 = document.createElement('td');
+  td4.innerHTML = data.MaxSpeed[i];
+  let td5 = document.createElement('td');
+  td5.innerHTML = data.Acceleration[i];
+  let td6 = document.createElement('td');
+  td6.innerHTML = data.Fuel[i];
+  tr.append(tf);
+  tr.append(td);
+  tr.append(td2);
+  tr.append(td3);
+  tr.append(td4);
+  tr.append(td5);
+  tr.append(td6);
+}
+} });
+
+
+var count = 49; //всего записей
+var cnt = 10; //сколько отображаем сначала
+var cnt_page = Math.ceil(count / cnt); //кол-во страниц
+
+//выводим список страниц
+var paginator = document.querySelector(".pagination");
+var page = '<span class="biggerTxt" id="start">&laquo;</span>       	<span class="biggerTxt" id="prev">&lsaquo;</span>';
+for (var i = 0; i < cnt_page; i++) {
+  page += "<span data-page=" + i * cnt + "  id=\"page" + (i + 1) + "\">" + (i + 1) + "</span>";
+}
+page += '<span class="biggerTxt" id="next">&rsaquo;</span>    	<span class="biggerTxt" id="end">&raquo;</span>';
+paginator.innerHTML = page;
+
+//выводим первые записи {cnt}
+var div_num = document.getElementsByTagName("tr");
+
+
+
+var main_page = document.getElementById("page1");
+main_page.classList.add("paginator_active", "activePage");
+
+//листаем
+function pagination(event) {
+  var e = event || window.event;
+  var target = e.target;
+  var id = target.id;
+  
+  if (target.tagName.toLowerCase() != "span") return;
+  if(target.className != "biggerTxt") {
+  
+  var num_ = id.substr(4);
+  var data_page = +target.dataset.page;
+  main_page.classList.remove("paginator_active", "activePage");
+  main_page = document.getElementById(id);
+  main_page.classList.add("paginator_active", "activePage");
+  
+  var j = 0;
+  for (var i = 1; i < div_num.length; i++) {
+    var data_num = div_num[i].dataset.num;
+    if (data_num < data_page || data_num > data_page)
+      div_num[i].style.display = "none";
+  }
+  for (var i = data_page+1; i < div_num.length; i++) {
+    if (j >= cnt) break;
+    div_num[i].style.display = "table-row";
+    j++;
+  }
+  }
+  else {
+		if (target.id == "start") {
+			main_page.classList.remove("paginator_active", "activePage");
+			main_page = document.getElementById("page1");
+			main_page.classList.add("paginator_active", "activePage");
+			
+			var j = 0;
+			  for (var i = 1; i < div_num.length; i++) {
+				var data_num = div_num[i].dataset.num;
+				if (data_num < 0 || data_num > 0)
+				  div_num[i].style.display = "none";
+			  }
+			  for (var i = 1; i < div_num.length; i++) {
+				if (j >= cnt) break;
+				div_num[i].style.display = "table-row";
+				j++;
+			  }
+		}
+		
+		if (target.id == "end") {
+			main_page.classList.remove("paginator_active", "activePage");
+			main_page = document.getElementById("page5");
+			main_page.classList.add("paginator_active", "activePage");
+		  
+			var j = 0;
+			  for (var i = 1; i < div_num.length; i++) {
+				var data_num = div_num[i].dataset.num;
+				if (data_num < 40 || data_num > 40)
+				  div_num[i].style.display = "none";
+			  }
+			  for (var i = 41; i < div_num.length; i++) {
+				if (j >= cnt) break;
+				div_num[i].style.display = "table-row";
+				j++;
+			  }
+		}
+		
+		if (target.id == "prev") {
+			if(main_page.id == "page2") {
+				main_page.classList.remove("paginator_active", "activePage");
+				main_page = document.getElementById("page1");
+				main_page.classList.add("paginator_active", "activePage");
+				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 0 || data_num > 0)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 1; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page3") {
+				main_page.classList.remove("paginator_active", "activePage");
+				main_page = document.getElementById("page2");
+				main_page.classList.add("paginator_active", "activePage");
+				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 10 || data_num > 10)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 11; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page4") {
+				main_page.classList.remove("paginator_active", "activePage");
+				main_page = document.getElementById("page3");
+				main_page.classList.add("paginator_active", "activePage");
+				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 20 || data_num > 20)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 21; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page5") {
+				main_page.classList.remove("paginator_active", "activePage");
+				main_page = document.getElementById("page4");
+				main_page.classList.add("paginator_active", "activePage");
+				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 30 || data_num > 30)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 31; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+		}
+		if (target.id == "next") {
+			if(main_page.id == "page1") {
+				main_page.classList.remove("paginator_active", "activePage");
+				main_page = document.getElementById("page2");
+				main_page.classList.add("paginator_active", "activePage");
+				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 10 || data_num > 10)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 11; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page2") {
+				main_page.classList.remove("paginator_active", "activePage");
+				main_page = document.getElementById("page3");
+				main_page.classList.add("paginator_active", "activePage");
+				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 20 || data_num > 20)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 21; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page3") {
+				main_page.classList.remove("paginator_active", "activePage");
+				main_page = document.getElementById("page4");
+				main_page.classList.add("paginator_active", "activePage");
+				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 30 || data_num > 30)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 31; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page4") {
+				main_page.classList.remove("paginator_active", "activePage");
+				main_page = document.getElementById("page5");
+				main_page.classList.add("paginator_active", "activePage");
+				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 40 || data_num > 40)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 41; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+		}
+  }
+}
+
+  var grid = document.getElementById('example1');
+
+		grid.onclick = function(e) {
+		  if (e.target.tagName != 'TH') return;
+			
+		  // Если TH -- сортируем
+		  let el = document.getElementsByTagName("th");
+		
+		if(el[e.target.cellIndex].className != "sorting_asc") {
+			let i;
+			for (i = 0; i < el.length; i++) { 
+				if(el[i].className != "sorting") {
+					el[i].className = "sorting"
+				}
+			}
+			el[e.target.cellIndex].className = "sorting_asc";
+			sortGrid(e.target.cellIndex, e.target.getAttribute('data-type'));
+		}
+		else {
+			el[e.target.cellIndex].className = "sorting_desc";
+			sortDesc(e.target.cellIndex, e.target.getAttribute('data-type'));
+		}	
+    };
+
+    function sortGrid(colNum, type) {
+      var tbody = grid.getElementsByTagName('tbody')[0];
+
+      // Составить массив из TR
+      var rowsArray = [].slice.call(tbody.rows);
+      // определить функцию сравнения, в зависимости от типа
+      var compare;
+
+      switch (type) {
+        case 'number':
+          compare = function(rowA, rowB) {
+            return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML;
+          };
+          break;
+        case 'string':
+          compare = function(rowA, rowB) {
+            if(rowA.cells[colNum].textContent < rowB.cells[colNum].textContent) {
+				return 1;
+            } else {
+              return -1;
+            }
+          };
+          break;
+		  
+		case 'fuel':
+          compare = function(rowA, rowB) {
+		  var nA = Number(rowA.cells[colNum].innerHTML.substring(14,18));
+		  var nB = Number(rowB.cells[colNum].innerHTML.substring(14,18));
+            return nA - nB;
+          };
+          break;
+      }
+
+      // сортировать
+      rowsArray.sort(compare);
+
+      // Убрать tbody из большого DOM документа для лучшей производительности
+      grid.removeChild(tbody);
+
+      // добавить результат в нужном порядке в TBODY
+      // они автоматически будут убраны со старых мест и вставлены в правильном порядке
+      for (var i = 0; i < rowsArray.length; i++) {
+		rowsArray[i].dataset.num = i;
+        tbody.appendChild(rowsArray[i]);
+      }
+
+      grid.appendChild(tbody);
+	  
+	  if(main_page.id == "page1") {				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 0 || data_num > 0)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 1; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page2") {
+				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 10 || data_num > 10)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 11; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page3") {				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 20 || data_num > 20)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 21; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page4") {
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 30 || data_num > 30)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 31; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page5") {
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 40 || data_num > 40)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 41; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+  }
+  
+      function sortDesc(colNum, type) {
+      var tbody = grid.getElementsByTagName('tbody')[0];
+
+      // Составить массив из TR
+      var rowsArray = [].slice.call(tbody.rows);
+      // определить функцию сравнения, в зависимости от типа
+      var compare;
+
+      switch (type) {
+        case 'number':
+          compare = function(rowA, rowB) {
+            return Number(rowB.cells[colNum].innerHTML) - Number(rowA.cells[colNum].innerHTML);
+          };
+          break;
+        case 'string':
+          compare = function(rowA, rowB) {
+            if(rowA.cells[colNum].textContent > rowB.cells[colNum].textContent) {
+				return 1;
+            } else {
+              return -1;
+            }
+          };
+          break;
+		case 'fuel':
+          compare = function(rowA, rowB) {
+		  var nA = Number(rowA.cells[colNum].innerHTML.substring(14,18));
+		  var nB = Number(rowB.cells[colNum].innerHTML.substring(14,18));
+            return nB - nA;
+          };
+          break;
+      }
+
+      // сортировать
+      rowsArray.sort(compare);
+
+      // Убрать tbody из большого DOM документа для лучшей производительности
+      grid.removeChild(tbody);
+
+      // добавить результат в нужном порядке в TBODY
+      // они автоматически будут убраны со старых мест и вставлены в правильном порядке
+      for (var i = 0; i < rowsArray.length; i++) {
+		rowsArray[i].dataset.num = i;
+        tbody.appendChild(rowsArray[i]);
+      }
+
+      grid.appendChild(tbody);
+	  
+	  if(main_page.id == "page1") {				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 0 || data_num > 0)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 1; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page2") {
+				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 10 || data_num > 10)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 11; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page3") {				
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 20 || data_num > 20)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 21; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page4") {
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 30 || data_num > 30)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 31; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+			else if(main_page.id == "page5") {
+				var j = 0;
+				  for (var i = 1; i < div_num.length; i++) {
+					var data_num = div_num[i].dataset.num;
+					if (data_num < 40 || data_num > 40)
+					  div_num[i].style.display = "none";
+				  }
+				  for (var i = 41; i < div_num.length; i++) {
+					if (j >= cnt) break;
+					div_num[i].style.display = "table-row";
+					j++;
+				  }
+			}
+  }
+
+
+document.body.onclick = function(e) {
+		if(e.target.dataset.mod !="mdl") {
+			if(getComputedStyle(document.getElementsByClassName("modal")[0]).opacity != 0) {
+				document.getElementById("modal").style.opacity = "0";
+				document.getElementById("modal").style.zIndex = "-1";
+			}
+		}
+		if(e.target.dataset.mod =="btn") {
+				document.getElementById("modal").style.opacity = "1";
+				document.getElementById("modal").style.zIndex = "2";
+		}
+		if(e.target.dataset.mod !="mdl2") {
+				document.getElementById("modal2").style.opacity = "0";
+				document.getElementById("modal2").style.zIndex = "-1";
+				document.getElementById("modal2").getElementsByClassName("modal")[0].style.opacity = "0";
+				document.getElementById("modal2").getElementsByClassName("modal")[0].style.zIndex = "-1";
+			
+		}
+		if(e.target.dataset.mod =="btn2") {
+				document.getElementById("modal2").style.opacity = "1";
+				document.getElementById("modal2").style.zIndex = "2";
+				document.getElementById("modal2").getElementsByClassName("modal")[0].style.opacity = "1";
+				document.getElementById("modal2").getElementsByClassName("modal")[0].style.zIndex = "2";
+		}
+		if(e.target.dataset.mod !="mdl3") {
+				document.getElementById("modal3").style.opacity = "0";
+				document.getElementById("modal3").style.zIndex = "-1";
+				document.getElementById("modal3").getElementsByClassName("modal")[0].style.opacity = "0";
+				document.getElementById("modal3").getElementsByClassName("modal")[0].style.zIndex = "-1";
+			
+		}
+		if(e.target.dataset.mod =="btn3") {
+				document.getElementById("modal3").style.opacity = "1";
+				document.getElementById("modal3").style.zIndex = "2";
+				document.getElementById("modal3").getElementsByClassName("modal")[0].style.opacity = "1";
+				document.getElementById("modal3").getElementsByClassName("modal")[0].style.zIndex = "2";
+		}
+		console.log(e.target.dataset.mod);
+    };
+	
+function someFunc(){
+	var One = document.getElementById("inputf").value;
+	var Two = document.getElementById("select").value;
+	var Three = document.getElementById("inputg").value;
+	var Fourth = document.getElementById("inputh").value;
+	var Fifth = document.getElementById("inputj").value;
+	var Six = document.getElementById("inputk").value;
+	console.log(One,Two,Three,Fourth,Fifth,Six);
+	
+	let element = document.getElementById('example1').getElementsByTagName("tbody")[0];  
+	
+	
+	var parent = document.getElementById('example1').getElementsByTagName("tbody")[0];
+	var before = parent.getElementsByTagName("tr")[0];
+
+	var p = document.createElement('tr');
+	p.innerHTML = '<td><input type="checkbox"></td><td>'+One+'</td><td>'+Two+'</td><td>'+Three+'</td><td>'+Fourth+'</td><td>'+Fifth+'</td><td>'+Six+'</td>';	
+	
+	parent.insertBefore(p, before);
+	
+	document.getElementById("modal").style.opacity = "0";
+	document.getElementById("modal").style.zIndex = "-1";
+}
+
+document.getElementById("Sumb").onclick = someFunc;
+
+function someFunc2(){
+	
+	let element = document.getElementById('example1').getElementsByTagName("tbody")[0];
+	
+	for (var i = 0; i < element.getElementsByTagName("tr").length; i++) {
+		var before = element.getElementsByTagName("tr")[i];
+		var tdi = before.getElementsByTagName("td")[0];
+		var gdi = tdi.getElementsByTagName("input")[0];
+		
+		if (gdi.checked) {
+			element.removeChild(before);
+		}
+	}
+				document.getElementById("modal2").style.opacity = "0";
+				document.getElementById("modal2").style.zIndex = "-1";
+				document.getElementById("modal2").getElementsByClassName("modal")[0].style.opacity = "0";
+				document.getElementById("modal2").getElementsByClassName("modal")[0].style.zIndex = "-1";
+}
+
+document.getElementById("Sumb2").onclick = someFunc2;
+
+function someFunc3(){
+	let element = document.getElementById('example1').getElementsByTagName("tbody")[0];
+
+	for (var i = 0, j = 0; j != 7; i++) {
+			var before = element.getElementsByTagName("tr")[i];
+			var tdi = before.getElementsByTagName("td")[0];
+			var gdi = tdi.getElementsByTagName("input")[0];
+			
+			if (gdi.checked) {
+				var cc = before.getElementsByTagName("td");
+				console.log(cc[1].innerHTML+cc[2].innerHTML+cc[3].innerHTML+cc[4].innerHTML+cc[5].innerHTML+cc[6].innerHTML);
+				
+				document.getElementById("inputf3").value = cc[1].innerHTML;
+				document.getElementById("select3").value = cc[2].innerHTML;
+				document.getElementById("inputg3").value = cc[3].innerHTML;
+				document.getElementById("inputh3").value = cc[4].innerHTML;
+				document.getElementById("inputj3").value = cc[5].innerHTML;
+				document.getElementById("inputk3").value = cc[6].innerHTML;
+				j = 7;
+			}
+	}
+}
+document.getElementById("hfg").onclick = someFunc3;
+
+
+function someFunc4(){
+	var One = document.getElementById("inputf3").value;
+	var Two = document.getElementById("select3").value;
+	var Three = document.getElementById("inputg3").value;
+	var Fourth = document.getElementById("inputh3").value;
+	var Fifth = document.getElementById("inputj3").value;
+	var Six = document.getElementById("inputk3").value;
+	console.log(One,Two,Three,Fourth,Fifth,Six);
+	
+	let element = document.getElementById('example1').getElementsByTagName("tbody")[0];
+
+	for (var i = 0, j = 0; j != 7; i++) {
+			var before = element.getElementsByTagName("tr")[i];
+			var tdi = before.getElementsByTagName("td")[0];
+			var gdi = tdi.getElementsByTagName("input")[0];
+			
+			if (gdi.checked) {
+				var cc = before.getElementsByTagName("td");
+				console.log(cc[1].innerHTML+cc[2].innerHTML+cc[3].innerHTML+cc[4].innerHTML+cc[5].innerHTML+cc[6].innerHTML);
+				cc[1].innerHTML=One;
+				cc[2].innerHTML=Two;
+				cc[3].innerHTML=Three;
+				cc[4].innerHTML=Fourth;
+				cc[5].innerHTML=Fifth;
+				cc[6].innerHTML=Six;
+				j = 7;
+			}
+	}
+	
+	document.getElementById("modal3").style.opacity = "0";
+	document.getElementById("modal3").style.zIndex = "-1";
+}
+
+document.getElementById("Sumb3").onclick = someFunc4;
+
+</script>
+</body>
+</html>
